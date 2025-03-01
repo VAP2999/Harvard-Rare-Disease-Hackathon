@@ -137,8 +137,8 @@ if __name__ == "__main__":
 
     # -----------------------------------------------------------------------------------------------
     # Explore the ontology structure
-    path_to_obo = './hp.obo'
-    path_to_disease_anno = './phenotype.hpoa'
+    path_to_obo = r'C:\Users\malav\Downloads\Harvard\Harvard-Rare-Diseases-Hackathon\hp.obo'
+    path_to_disease_anno = r'C:\Users\malav\Downloads\Harvard\Harvard-Rare-Diseases-Hackathon\phenotype.hpoa'
 
     pheno_ontology = load_ontology(path_to_obo)
 
