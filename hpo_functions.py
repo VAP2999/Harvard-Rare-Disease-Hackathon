@@ -20,6 +20,7 @@ Dependencies:
 """
 
 import pronto
+from phrank import Phrank
 import math
 
 
@@ -141,11 +142,20 @@ if __name__ == "__main__":
 
     pheno_ontology = load_ontology(path_to_obo)
 
+
+    
     # Example patient with the following standardized phenotype terms
     patient = {'HP:0000059', 'HP:0000164', 'HP:0000248', 'HP:0000252', 'HP:0000276', 'HP:0000308',
                'HP:0000411', 'HP:0000448', 'HP:0000574', 'HP:0000717', 'HP:0001344', 'HP:0001537',
                'HP:0001631', 'HP:0002058', 'HP:0002126', 'HP:0002212', 'HP:0002269', 'HP:0002342',
                'HP:0002558', 'HP:0004749', 'HP:0006337', 'HP:0012169'}
+
+    DAG = "./output_dag.txt"
+    DISEASE_TO_PHENO = "./output.txt"
+    patient_phenotypes = list(patient)
+    p_hpo = Phrank(DAG, diseaseannotationsfile=DISEASE_TO_PHENO)
+    disease_ranking = p_hpo.rank_diseases([],patient_phenotypes)
+    print(dict(disease_ranking))
 
     # Find the names of the patient's phenotype terms
     for term_id in sorted(list(patient)):
