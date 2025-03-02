@@ -45,7 +45,7 @@ Differential diagnosis based on a patient's symptoms is a Streamlit-based web ap
 Execute the following command in the project directory:
 
 ```
-streamlit run app.py
+streamlit run app_daxil.py
 ```
 
 ## Main Components
