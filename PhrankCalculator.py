@@ -544,29 +544,29 @@ def main():
     gene_rankings = calculator.rank_genes(patient_phenotypes) if args.genes else []
     term_suggestions = calculator.suggest_terms(disease_rankings, patient_phenotypes)
     
-    # Save results
-    with open(os.path.join(args.output, 'disease_rankings.txt'), 'w') as f:
-        for score, disease_id, name in disease_rankings:
-            f.write(f"{disease_id}\t{name}\t{score}\n")
+    # # Save results
+    # with open(os.path.join(args.output, 'disease_rankings.txt'), 'w') as f:
+    #     for score, disease_id, name in disease_rankings:
+    #         f.write(f"{disease_id}\t{name}\t{score}\n")
     
-    if gene_rankings:
-        with open(os.path.join(args.output, 'gene_rankings.txt'), 'w') as f:
-            for gene, score in gene_rankings:
-                f.write(f"{gene}\t{score}\n")
+    # if gene_rankings:
+    #     with open(os.path.join(args.output, 'gene_rankings.txt'), 'w') as f:
+    #         for gene, score in gene_rankings:
+    #             f.write(f"{gene}\t{score}\n")
     
-    with open(os.path.join(args.output, 'term_suggestions.txt'), 'w') as f:
-        for term, ic in term_suggestions:
-            name = calculator.ontology[term].name if term in calculator.ontology else ""
-            f.write(f"{term}\t{name}\t{ic}\n")
+    # with open(os.path.join(args.output, 'term_suggestions.txt'), 'w') as f:
+    #     for term, ic in term_suggestions:
+    #         name = calculator.ontology[term].name if term in calculator.ontology else ""
+    #         f.write(f"{term}\t{name}\t{ic}\n")
     
     # Generate visualizations if requested
-    if args.visualize:
-        print("Generating visualizations...")
-        calculator.visualize_dag()
-        calculator.visualize_dag(focus_term=patient_phenotypes[0] if patient_phenotypes else None)
-        calculator.visualize_disease_similarity_network(patient_phenotypes)
+    # if args.visualize:
+    #     print("Generating visualizations...")
+    #     calculator.visualize_dag()
+    #     calculator.visualize_dag(focus_term=patient_phenotypes[0] if patient_phenotypes else None)
+    #     calculator.visualize_disease_similarity_network(patient_phenotypes)
     
-    print(f"Results saved to {args.output} directory")
+    # print(f"Results saved to {args.output} directory")
 
 
 if __name__ == "__main__":
@@ -583,21 +583,24 @@ if __name__ == "__main__":
         )
         
         # Example patient phenotypes
-        patient_phenotypes = {
-            'HP:0000824', 'HP:0000831', 'HP:0000938', 'HP:0001260',
-            'HP:0001266', 'HP:0001268', 'HP:0001332', 'HP:0001510',
-            'HP:0001596', 'HP:0003077', 'HP:0005135', 'HP:0040171',
-            'HP:0008619', 'HP:0008669', 'HP:0008734', 'HP:0100840',
-            'HP:0001627', 'HP:0000062', 'HP:0010646'
-        }
-        
-        # Generate visualizations
-        phrank.visualize_dag()
-        phrank.visualize_dag(focus_term='HP:0000707')  # Abnormality of the nervous system
-        phrank.visualize_disease_similarity_network(patient_phenotypes)
+        patient_phenotypes = [
+        "HP:0000750", "HP:0000957", "HP:0001250", "HP:0001263", "HP:0000193",
+        "HP:0000256", "HP:0000486", "HP:0012646", "HP:0001596", "HP:0002015","HP:0003737", "HP:0004850", "HP:0005619", "HP:0040075", "HP:0002136", 
+        "HP:0002204", "HP:0000348", "HP:0000486", "HP:0000490", "HP:0000634", 
+        "HP:0000771", "HP:0000824", "HP:0100724", "HP:0001324", "HP:0001508", 
+        "HP:0008213", "HP:0008245", "HP:0009890", "HP:0009921", "HP:0010538", 
+        "HP:0001873", "HP:0001988"
+        ]
+
+
+
+        # # Generate visualizations
+        # phrank.visualize_dag()
+        # phrank.visualize_dag(focus_term='HP:0000707')  # Abnormality of the nervous system
+        # phrank.visualize_disease_similarity_network(patient_phenotypes)
         
         # Get disease rankings
-        disease_ranking = phrank.rank_diseases(patient_phenotypes)
+        disease_ranking = phrank.rank_diseases(patient_phenotypes, top_n=5)
         print("\nTop Disease Matches:")
         for score, disease_id, name in disease_ranking:
             print(f"{name} (Score: {score:.2f})")
