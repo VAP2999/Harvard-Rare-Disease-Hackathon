@@ -577,9 +577,9 @@ if __name__ == "__main__":
         # Demo with sample data
         print("Running demo with sample data...")
         phrank = PhrankCalculator(
-            obo_file='data\hp.obo',
-            hpoa_file='data\phenotype.hpoa',
-            disease_gene_file='genes_to_disease.txt'
+            obo_file='data/hp.obo',
+            hpoa_file='data/phenotype.hpoa',
+            disease_gene_file='data/genes_to_disease.txt'
         )
         
         # Example patient phenotypes
