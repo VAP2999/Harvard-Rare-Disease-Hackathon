@@ -388,7 +388,6 @@ with input_col:
                 <div style="width:100%; background-color:#ddd; border-radius:5px;">
                     <div style="width:{min(st.session_state.similarity_score, 100)}%; background-color:{progress_color}; height:20px; border-radius:5px;"></div>
                 </div>
-                <p style="font-size:0.8em; margin-top:5px;">Need to reach 60 to view matches</p>
             </div>
             """, unsafe_allow_html=True)
 
