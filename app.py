@@ -3,6 +3,11 @@ import os
 import time
 from PhrankCalculator import PhrankCalculator  # Your existing class
 
+
+# Static file paths
+OBO_PATH = "data/hp.obo"  # Update with your actual path
+HPOA_PATH = "data/phenotype.hpoa"  # Update with your actual path
+
 # Placeholder ClinPhen API integration (replace with actual implementation)
 def clinphen_to_hpo(clinical_notes):
     """Simulate ClinPhen API call to convert clinical notes to HPO terms"""
@@ -17,12 +22,20 @@ st.set_page_config(
     page_title="HPO Disease Matcher",
     page_icon="🧬",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="auto"
 )
 
 # Session State Initialization
 if 'phrank' not in st.session_state:
-    st.session_state.phrank = None
+    try:
+        st.session_state.phrank = PhrankCalculator(
+            obo_file=OBO_PATH,
+            hpoa_file=HPOA_PATH
+        )
+    except Exception as e:
+        st.error(f"Error loading HPO data: {str(e)}")
+        st.session_state.phrank = None
+
 if 'patient_terms' not in st.session_state:
     st.session_state.patient_terms = set()
 if 'clinical_notes' not in st.session_state:
@@ -30,32 +43,32 @@ if 'clinical_notes' not in st.session_state:
 if 'hpo_generated' not in st.session_state:
     st.session_state.hpo_generated = False
 
-# Sidebar - Data Configuration
-with st.sidebar:
-    st.header("Data Configuration")
-    obo_file = st.file_uploader("Upload HPO OBO File", type=['obo'])
-    hpoa_file = st.file_uploader("Upload Phenotype HPOA File", type=['hpoa'])
+# # Sidebar - Data Configuration
+# with st.sidebar:
+#     st.header("Data Configuration")
+#     obo_file = st.file_uploader("Upload HPO OBO File", type=['obo'])
+#     hpoa_file = st.file_uploader("Upload Phenotype HPOA File", type=['hpoa'])
     
-    if obo_file and hpoa_file:
-        with st.spinner("Loading HPO data..."):
-            # Save uploaded files
-            obo_path = os.path.join("data", "hp.obo")
-            hpoa_path = os.path.join("data", "phenotype.hpoa")
+#     if obo_file and hpoa_file:
+#         with st.spinner("Loading HPO data..."):
+#             # Save uploaded files
+#             obo_path = os.path.join("data", "hp.obo")
+#             hpoa_path = os.path.join("data", "phenotype.hpoa")
             
-            with open(obo_path, "wb") as f:
-                f.write(obo_file.getbuffer())
-            with open(hpoa_path, "wb") as f:
-                f.write(hpoa_file.getbuffer())
+#             with open(obo_path, "wb") as f:
+#                 f.write(obo_file.getbuffer())
+#             with open(hpoa_path, "wb") as f:
+#                 f.write(hpoa_file.getbuffer())
             
-            # Initialize Phrank calculator
-            try:
-                st.session_state.phrank = PhrankCalculator(
-                    obo_file=obo_path,
-                    hpoa_file=hpoa_path
-                )
-                st.success("HPO data loaded successfully!")
-            except Exception as e:
-                st.error(f"Error loading HPO data: {str(e)}")
+#             # Initialize Phrank calculator
+#             try:
+#                 st.session_state.phrank = PhrankCalculator(
+#                     obo_file=obo_path,
+#                     hpoa_file=hpoa_path
+#                 )
+#                 st.success("HPO data loaded successfully!")
+#             except Exception as e:
+#                 st.error(f"Error loading HPO data: {str(e)}")
 
 # Main Application Interface
 st.title("Phenotype-Driven Disease Matching")
