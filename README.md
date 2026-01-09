@@ -82,3 +82,22 @@ Sources
 [18] json — JSON encoder and decoder — Python 3.13.2 documentation https://docs.python.org/3/library/json.html
 [19] re — Regular expression operations — Python 3.13.2 documentation https://docs.python.org/3/library/re.html
 [20] ClassCalc - Test Safe Online Graphing Calculator https://classcalc.com
+
+
+graph TD
+    User((User Browser)) -- "PDF Upload" --> API[FastAPI Gateway]
+    
+    subgraph "Backend Orchestration"
+    API --> TM{Task Manager}
+    TM -- "AsyncIO Semaphore (max 10)" --> TM
+    end
+
+    subgraph "Processing Engine"
+    TM --> PDF[PDF Extractor: pdfplumber/OCR]
+    PDF -- "Full Text" --> LLM[Gemini 1.5 Flash]
+    LLM -- "Structured JSON" --> TM
+    end
+
+    TM --> DB[(SQLite DB)]
+    User -- "Poll Results" --> API
+    API -.-> DB
