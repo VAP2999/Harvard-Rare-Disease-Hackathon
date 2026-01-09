@@ -83,6 +83,5 @@ Sources
 [19] re — Regular expression operations — Python 3.13.2 documentation https://docs.python.org/3/library/re.html
 [20] ClassCalc - Test Safe Online Graphing Calculator https://classcalc.com
 
-<img width="1355" height="1317" alt="image" src="https://github.com/user-attachments/assets/69d2d9c9-5739-4114-8614-f9d913424546" />
 
 
