@@ -84,20 +84,4 @@ Sources
 [20] ClassCalc - Test Safe Online Graphing Calculator https://classcalc.com
 
 
-graph TD
-    User((User Browser)) -- "PDF Upload" --> API[FastAPI Gateway]
-    
-    subgraph "Backend Orchestration"
-    API --> TM{Task Manager}
-    TM -- "AsyncIO Semaphore (max 10)" --> TM
-    end
 
-    subgraph "Processing Engine"
-    TM --> PDF[PDF Extractor: pdfplumber/OCR]
-    PDF -- "Full Text" --> LLM[Gemini 1.5 Flash]
-    LLM -- "Structured JSON" --> TM
-    end
-
-    TM --> DB[(SQLite DB)]
-    User -- "Poll Results" --> API
-    API -.-> DB
